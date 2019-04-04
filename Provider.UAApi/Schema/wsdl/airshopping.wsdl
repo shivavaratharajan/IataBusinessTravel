@@ -1,0 +1,67 @@
+<wsdl:definitions targetNamespace="http://farelogix.com/flx" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s0="http://farelogix.com/flx" xmlns:t="http://farelogix.com/flx/tc" xmlns:s1="http://farelogix.com/flx/AirShoppingRQ" xmlns:s2="http://farelogix.com/flx/AirShoppingRS">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://farelogix.com/flx/tc" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <xsd:include schemaLocation="schema_flat/transaction_flat.xsd" />
+    </xsd:schema>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://farelogix.com/flx/AirShoppingRQ">
+      <xsd:include schemaLocation="schema_flat/AirShoppingRQ_flat.xsd" />
+      <xsd:element name="FlxTransaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Context" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="s1:AirShoppingRQ" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://farelogix.com/flx/AirShoppingRS">
+      <xsd:include schemaLocation="schema_flat/AirShoppingRS_flat.xsd" />
+      <xsd:element name="FlxTransactionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Context" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="s2:AirShoppingRS" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="tcRequest">
+    <wsdl:part name="tcinfo" element="t:TransactionControl" />
+  </wsdl:message>
+  <wsdl:message name="tcResponse">
+    <wsdl:part name="tcinfo" element="t:Transaction" />
+  </wsdl:message>
+  <wsdl:message name="FlxRequestMessage">
+    <wsdl:part name="body" element="s1:FlxTransaction" />
+  </wsdl:message>
+  <wsdl:message name="FlxResponseMessage">
+    <wsdl:part name="body" element="s2:FlxTransactionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="FlxAirShoppingPort">
+    <wsdl:operation name="FlxTransaction">
+      <wsdl:input name="request" message="s0:FlxRequestMessage" />
+      <wsdl:output name="response" message="s0:FlxResponseMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FlxAirShoppingBinding" type="s0:FlxAirShoppingPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="FlxTransaction">
+      <soap:operation soapAction="XXTransaction" />
+      <wsdl:input name="request">
+        <soap:header message="s0:tcRequest" part="tcinfo" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="response">
+        <soap:header message="s0:tcResponse" part="tcinfo" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FlxAirShoppingService">
+    <wsdl:documentation>FLX Web Services - AirShopping</wsdl:documentation>
+    <wsdl:port name="FlxAirShoppingPort" binding="s0:FlxAirShoppingBinding">
+      <soap:address location="http://localhost:8880/xmlts" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

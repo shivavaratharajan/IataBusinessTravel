@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://farelogix.com/flx/tc" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://farelogix.com/flx/tc" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="TransactionControl">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tc">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" ref="app" />
+              <xsd:element minOccurs="0" ref="iden" />
+              <xsd:element minOccurs="0" ref="agent" />
+              <xsd:element minOccurs="0" ref="provider" />
+              <xsd:element minOccurs="0" ref="trace" />
+              <xsd:element minOccurs="0" ref="script" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="app">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="version" type="xsd:string" use="required" />
+          <xsd:attribute name="language" type="xsd:string" use="required" />
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="iden">
+    <xsd:complexType>
+      <xsd:attribute name="u" type="xsd:string" use="required" />
+      <xsd:attribute name="p" type="xsd:string" use="required" />
+      <xsd:attribute name="pseudocity" />
+      <xsd:attribute name="agt" />
+      <xsd:attribute name="agtpwd" />
+      <xsd:attribute name="agtrole" />
+      <xsd:attribute name="agy" />
+      <xsd:attribute name="EmulateTo" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="provider">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="session" type="xsd:string" use="optional" />
+          <xsd:attribute name="reset" type="xsd:string" use="optional" />
+          <xsd:attribute name="group" type="xsd:string" use="optional" />
+          <xsd:attribute name="vendor" type="xsd:string" use="optional" />
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="script">
+    <xsd:complexType>
+      <xsd:attribute name="engine" type="xsd:string" use="required" />
+      <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="agent">
+    <xsd:complexType>
+      <xsd:attribute name="user" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="trace" type="xsd:string" />
+  <xsd:element name="Transaction">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tc">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="pid" />
+              <xsd:element minOccurs="0" name="tid" />
+              <xsd:element minOccurs="0" name="dt" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

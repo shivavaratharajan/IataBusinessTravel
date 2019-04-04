@@ -1,0 +1,94 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s0="http://farelogix.com/flx" xmlns:s1="http://farelogix.com/flx/" xmlns:t="http://farelogix.com/flx/tc" targetNamespace="http://farelogix.com/flx">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://farelogix.com/flx/tc" elementFormDefault="qualified" attributeFormDefault="unqualified">
+			<xs:include schemaLocation="schema_flat/transaction_flat.xsd"/>
+		</xs:schema>
+		<xs:schema targetNamespace="http://farelogix.com/flx/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+			<xs:element name="GetProviderSession">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="ReleaseProviderSession">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Context" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://farelogix.com/flx/">
+			<xs:element name="GetProviderSessionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Context" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ReleaseProviderSessionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Context" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="tcRequest">
+		<wsdl:part name="tcinfo" element="t:TransactionControl"/>
+	</wsdl:message>
+	<wsdl:message name="tcResponse">
+		<wsdl:part name="tcinfo" element="t:Transaction"/>
+	</wsdl:message>
+	<wsdl:message name="GetProviderSessionMessage">
+		<wsdl:part name="body" element="s1:GetProviderSession"/>
+	</wsdl:message>
+	<wsdl:message name="GetProviderSessionResponseMessage">
+		<wsdl:part name="body" element="s1:GetProviderSessionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ReleaseProviderSessionMessage">
+		<wsdl:part name="body" element="s1:ReleaseProviderSession"/>
+	</wsdl:message>
+	<wsdl:message name="ReleaseProviderSessionResponseMessage">
+		<wsdl:part name="body" element="s1:ReleaseProviderSessionResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="FlxGetProviderSessionPort">
+		<wsdl:operation name="GetProviderSession">
+			<wsdl:input name="getrequest" message="s0:GetProviderSessionMessage"/>
+			<wsdl:output name="getresponse" message="s0:GetProviderSessionResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReleaseProviderSession">
+			<wsdl:input name="releaserequest" message="s0:ReleaseProviderSessionMessage"/>
+			<wsdl:output name="releaseresponse" message="s0:ReleaseProviderSessionResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FlxProviderSessionBinding" type="s0:FlxGetProviderSessionPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetProviderSession">
+			<soap:operation soapAction=""/>
+			<wsdl:input name="getrequest">
+				<soap:header message="s0:tcRequest" part="tcinfo" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getresponse">
+				<soap:header message="s0:tcResponse" part="tcinfo" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReleaseProviderSession">
+			<soap:operation soapAction=""/>
+			<wsdl:input name="releaserequest">
+				<soap:header message="s0:tcRequest" part="tcinfo" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="releaseresponse">
+				<soap:header message="s0:tcResponse" part="tcinfo" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FlxGetProviderSessionService">
+		<wsdl:documentation>FLX Web Services - GetProviderSession</wsdl:documentation>
+		<wsdl:port name="FlxGetProviderSessionPort" binding="s0:FlxProviderSessionBinding">
+			<soap:address location="http://localhost:8880/xmlts"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
