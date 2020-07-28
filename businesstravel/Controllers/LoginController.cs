@@ -89,7 +89,7 @@ namespace businesstravel.Controllers
 
             // if (login.Username == "mario" && login.Password == "secret")
             {
-                user = new UserModel { Name = "Shiva Varatharajan", Email = "shiva.varatharajan@united.com" };
+                user = new UserModel { Name = "Shiva Varatharajan", Email = "shiva.varatharajan@gmail.com" };
             }
             return user;
         }
